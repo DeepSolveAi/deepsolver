@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const chatSchema = new mongoose.Schema({
   userMessage: String,
-  aiResponse: String,
-  time: {
+  aiMessage: String,
+  createdAt: {
     type: Date,
     default: Date.now
   }
