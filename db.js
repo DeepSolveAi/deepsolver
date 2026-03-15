@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect("mongodb+srv://deepsolver:DeepSolver123@@cluster0.urpfs02.mongodb.net/deepsolver");;
 
 const db = mongoose.connection;
 
