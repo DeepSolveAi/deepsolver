@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DeepSolver AI</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- Sidebar -->
+<div class="sidebar">
+
+<h2>DeepSolver</h2>
+
+<button onclick="newChat()">+ New Chat</button>
+
+<div id="chatlist" class="chatlist"></div>
+
+</div>
+
+
+<!-- Main Chat -->
+<div class="main">
+
+<div id="chatArea" class="chat-area"></div>
+
+<div class="input-bar">
+
+<button id="uploadBtn">📎</button>
+
+<button id="cameraBtn">📷</button>
+
+<input 
+id="question" 
+type="text"
+placeholder="Ask DeepSolver anything..."
+autocomplete="off"
+/>
+
+<select id="mode">
+<option>Quick Answer</option>
+<option>Step By Step</option>
+<option>Detailed Explanation</option>
+</select>
+
+<button id="sendBtn">Send</button>
+
+<!-- hidden inputs -->
+<input type="file" id="fileInput" accept="image/*,.pdf,.txt" style="display:none">
+<input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none">
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="script.js"></script>
+
+<script>
+
+// send button
+document.getElementById("sendBtn").addEventListener("click", askAI)
+
+// open file picker
+document.getElementById("uploadBtn").onclick = function(){
+document.getElementById("fileInput").click()
+}
+
+// open camera
+document.getElementById("cameraBtn").onclick = function(){
+document.getElementById("cameraInput").click()
+}
+
+// file preview
+document.getElementById("fileInput").addEventListener("change", function(event){
+
+let file = event.target.files[0]
+if(!file) return
+
+let reader = new FileReader()
+
+reader.onload = function(e){
+
+let chat = document.getElementById("chatArea")
+
+let msg = document.createElement("div")
+msg.className = "message user"
+
+if(file.type.startsWith("image")){
+
+let img = document.createElement("img")
+img.src = e.target.result
+img.style.maxWidth = "200px"
+img.style.borderRadius = "10px"
+
+msg.appendChild(img)
+
+}else{
+
+msg.innerText = "📄 File uploaded: " + file.name
+
+}
+
+chat.appendChild(msg)
+
+chat.scrollTop = chat.scrollHeight
+
+}
+
+reader.readAsDataURL(file)
+
+})
+
+// camera preview
+document.getElementById("cameraInput").addEventListener("change", function(event){
+
+let file = event.target.files[0]
+if(!file) return
+
+let reader = new FileReader()
+
+reader.onload = function(e){
+
+let chat = document.getElementById("chatArea")
+
+let msg = document.createElement("div")
+msg.className = "message user"
+
+let img = document.createElement("img")
+img.src = e.target.result
+img.style.maxWidth = "200px"
+img.style.borderRadius = "10px"
+
+msg.appendChild(img)
+
+chat.appendChild(msg)
+
+chat.scrollTop = chat.scrollHeight
+
+}
+
+reader.readAsDataURL(file)
+
+})
+
+</script>
+
+</body>
+</html>
