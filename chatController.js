@@ -1,5 +1,5 @@
 const axios = require("axios");
-const Chat = require("../models/chatModel");
+const Chat = require("./chatModel");
 
 exports.chat = async (req, res) => {
 
